@@ -11,9 +11,14 @@ def get_youtube_transcript(video_url):
         # Extract video ID from URL
         video_id = re.search(r"(?:v=|\/)([0-9A-Za-z_-]{11})", video_url).group(1)
         print("Video ID:", video_id)
+
+        proxies = {
+            'http': 'http://195.158.8.123:3128',
+            'https': 'http://195.158.8.123:3128'
+        }
         
         # Fetch transcript
-        transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=['en'])
+        transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=['en'], proxies=proxies )
         print("Transcript1:", transcript)
         
         return transcript
