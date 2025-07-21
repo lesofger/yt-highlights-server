@@ -35,15 +35,18 @@ def get_youtube_metrics(video_url, api_key):
         
         # Fetch video details
         request = youtube.videos().list(
-            part='statistics',
+            part='statistics, snippet',
             id=video_id
         )
         response = request.execute()
         
         # Extract metrics
         if response['items']:
-            stats = response['items'][0]['statistics']
+            item = response['items'][0]
+            stats = item['statistics']
+            snippet = item['snippet']
             metrics = {
+                'title': snippet.get('title', 'N/A'),
                 'view_count': stats.get('viewCount', 'N/A'),
                 'like_count': stats.get('likeCount', 'N/A'),
                 'comment_count': stats.get('commentCount', 'N/A'),
